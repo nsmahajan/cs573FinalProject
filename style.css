@@ -1,0 +1,59 @@
+.header {
+    //background-image: url("background.jpg");
+	width : 1250px;
+	height: 608px;
+	background-size: 100%;
+}
+
+#state{
+	height: 36px;
+    font-size: 1em;
+}
+
+.stateTitle{
+	font-size: 1.2em;
+	margin: 10px;
+}
+
+.checkBoxTitle{
+	font-size: 1.2em;
+}
+
+input[type=checkbox] {
+  transform: scale(1.5);
+}
+
+.schoolCheckbox, .populationCheckbox{
+	margin: 10px;
+}
+
+.schoolContainer, .populationContainer{
+	margin:10px;
+}
+
+.collegeTitle{
+	font-size: 1.2em;
+	margin: 10px;
+}
+
+#college{
+	height: 36px;
+    font-size: 1em;
+}
+
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.bar {
+  fill: steelblue;
+}
+
+.x.axis path {
+  display: none;
+}
+
