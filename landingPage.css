@@ -1,0 +1,73 @@
+.landingPage{
+	height:100%;
+    background-size: cover;
+    background-repeat: round;
+}
+
+.mapContainer{
+	height:80%;
+}
+
+.compareButtonContainer{
+	height:20%;
+	text-align: center;
+}
+
+.usmap{
+	width:80%;
+	height:100%;
+	margin-left: 10%;
+    margin-right: 10%;
+}
+
+path:hover {
+	fill-opacity: .7;
+}
+
+.hidden {
+        display: none;
+    }
+
+.tooltip {   
+ 	position: absolute;           
+	text-align: left;           
+	width: 165px;                  
+	height: 45x;                 
+	padding: 10px;             
+	font: 14px sans-serif;        
+	background: white;   
+	border: 0px;      
+	border-radius: 8px;           
+	pointer-events: none;         
+}
+
+.q0-10 { fill:rgb(213,222,217); }
+.q1-10 { fill:rgb(69,173,168); }
+.q2-10 { fill:rgb(84,36,55); }
+.q3-10 { fill:rgb(217,91,67); }
+
+.compareButton {
+	display: inline-block;
+	padding: 10px 20px;
+	font-size: 16px;
+	font-family: cursive;
+	cursor: pointer;
+	text-align: center;
+	text-decoration: none;
+	outline: none;
+	color: #fff;
+	background-color: #4CAF50;
+	border: none;
+	border-radius: 15px;
+	box-shadow: 0 9px #999;
+}
+
+.compareButton:hover {
+	background-color: #3e8e41
+}
+
+.compareButton:active {
+	background-color: #3e8e41;
+	box-shadow: 0 5px #666;
+	transform: translateY(4px);
+}
