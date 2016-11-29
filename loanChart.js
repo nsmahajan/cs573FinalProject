@@ -11,7 +11,7 @@ function LoanChart(parentPage){
     this.ySlope = {};
 
 	this.ySlopeScale = d3.scale.linear()
-		.range([this.heightSlope, 0])
+		.range([(this.heightSlope-20), 0])
 		.domain([0,100]);
 }
 
@@ -29,7 +29,8 @@ LoanChart.prototype.updateChart = function(selectedCollege) {
 	var line = d3.svg.line(),
 		axis = d3.svg.axis().orient("left"),
     background,
-    foreground;
+    foreground,
+	title;
 	
 	var svgParallel = this.svg.append("g")
 		.attr("transform", "translate(" + this.marginSlope.left + "," + this.marginSlope.top * 2 + ")")
@@ -47,8 +48,8 @@ LoanChart.prototype.updateChart = function(selectedCollege) {
 					var temp = {names: d.INSTNM};
 					var name = temp;
 					eval(name).names = d.INSTNM;
-					eval(name).pell = (100 * d.PCTPELL);
-					eval(name).federal = (100 * d.PCTFLOAN);
+					eval(name).PELL = (100 * d.PCTPELL);
+					eval(name).Federal = (100 * d.PCTFLOAN);
 					data.push(name);
 				}else{
 					noDataAvailable.push(selectedCollege[i]);
@@ -82,7 +83,8 @@ LoanChart.prototype.updateChart = function(selectedCollege) {
 							.data(data)
 							.enter().append("path")
 							.attr("d", path)	  
-							.attr("stroke", function(d) { return colorSlope(c_value(d));});
+							.attr("stroke", function(d) { return colorSlope(c_value(d));})
+							.attr("stroke-width", "1.5px");
  
  
 	// Add a group element for each dimension.
@@ -98,10 +100,22 @@ LoanChart.prototype.updateChart = function(selectedCollege) {
 	.each(function(d) { d3.select(this).call(axis.scale(_self.ySlope[d])); })
 	.append("text")
 	.style("text-anchor", "middle")
-	.attr("y", -9)
+	.attr("stroke-width","1.5px")
+	.attr("y", -15)
 	.attr("fill", "black")
-	.text(function(d) { return d; });
+	.text(function(d) { return d+" Grant"; });
 	
+	// title
+   title = this.svg.append("g")
+	  .attr("class", "title")
+	  .attr("transform", "translate(" +0 + "," + 0+ ")")
+	  .append("text")
+	  .attr("x", 60)
+	  .attr("y", 20)
+	  .attr("font-size", 15)
+	  .attr("font-family", "sans-serif")
+	  .text("Percentage(%) of Students who received PELL/Federal Funding");
+
 	// legend
 	var legend = svgParallel.selectAll(".slopelegend")
 				.data(colorSlope.domain())
@@ -111,17 +125,17 @@ LoanChart.prototype.updateChart = function(selectedCollege) {
 
 	// legend colored rectangles
 	legend.append("rect")
-		.attr("x", this.widthSlope-18)
+		.attr("x", this.widthSlope-350)
 		.attr("width", 18)
 		.attr("height", 18)
 		.style("fill", colorSlope);
 
 	// legend text
 	legend.append("text")
-		.attr("x", this.widthSlope - 24)
+		.attr("x", this.widthSlope - 320)
 		.attr("y", 9)
 		.attr("dy", ".35em")
-		.style("text-anchor", "end")
+		.style("text-align", "left")
 		.text(function(d) { return d;})
 
 	// Returns the path for a given data point.

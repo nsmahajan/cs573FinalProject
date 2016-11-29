@@ -16,8 +16,14 @@ TreeMap.prototype.updateChart = function(selectedCollege){
 	var result = [];
 	
 	d3.select('.grandparent').remove();
+	d3.select('.grandRect').remove();
 	d3.select('.treemapGroup').remove();
-	d3.select('.title').remove();	
+	d3.select('.title').remove();
+	d3.select('.parent').remove();	
+	d3.select('.child').remove();	
+
+	if(selectedCollege.length > 0)
+	{
 	dat.forEach(function(d) {
 					for(var i=0; i<selectedCollege.length; i++)
 					{
@@ -44,7 +50,7 @@ TreeMap.prototype.updateChart = function(selectedCollege){
 						obj={};
 						obj["key"] = courses[course].course;
 						obj["college"]=currentline.INSTNM;
-						obj["value"]= +currentline[key] /**currentline.UGDS*/;
+						obj["value"]= +currentline[key];//+((+currentline[key] * 100).toFixed(2));
 						result.push(obj);
 					}
 				}
@@ -62,7 +68,7 @@ TreeMap.prototype.updateChart = function(selectedCollege){
 	var color = d3.scale.ordinal()
 				.domain(function(d) { return d.college;})
 				.range(["#a6cee3","#1f78b4","#b2df8a","#33a02c","#fb9a99","#e31a1c","#fdbf6f","#ff7f00","#cab2d6","#6a3d9a"]);
-					 
+		
 	var x = d3.scale.linear()
 			.domain([0, width])
 			.range([0, width]);
@@ -86,6 +92,7 @@ TreeMap.prototype.updateChart = function(selectedCollege){
       .attr("class", "grandparent");
   
   grandparent.append("rect")
+	  .attr("class","grandRect")
       .attr("y", -margin.top)
       .attr("width", width)
       .attr("height", margin.top);
@@ -95,9 +102,9 @@ TreeMap.prototype.updateChart = function(selectedCollege){
       .attr("y", 6 - margin.top)
       .attr("dy", ".75em")
 	  .attr("font-family","sans-serif")
-	  .attr("font-size","20px");
+	  .attr("font-size","15px");
     
-var data = d3.nest().key(function(d) { return d.college; }).entries(result);
+var data = d3.nest().key(function(d) { return d.college; }).key(function(d) { return d.key; }).entries(result);
 var root = {key: "College", values: data};
 var formatNumber = d3.format(",d");
 
@@ -145,11 +152,12 @@ var formatNumber = d3.format(",d");
   }
 
   function display(d) {
-    grandparent
-        .datum(d.parent)
-        .on("click", transition)
-      .select("text")
-        .text(name(d));
+	  if(selectedCollege.length != 0)
+	  {
+		grandparent.datum(d.parent)
+					.on("click", transition)
+					.select("text")
+					.text(name(d));
 
     var g1 = gouter.insert("g", ".grandparent")
         .datum(d)
@@ -171,34 +179,31 @@ var formatNumber = d3.format(",d");
         .attr("class", "child")
         .call(rect)
       .append("title")
-        .text(function(d) { return d.key  /*+" (" + formatNumber(d.value) + ")"*/; });
+        .text(function(d) { return d.key; });
     children.append("text")
         .attr("class", "ctext")
         .text(function(d) { return d.key; })
 		.attr("font-family","sans-serif")
-		.attr("font-size","16px")
-        .call(text2);
-
+		.attr("font-size","13px");
+        
     g.append("rect")
         .attr("class", "parent")
         .call(rect);
 
-    var t = g.append("text")
-        .attr("class", "ptext")
-        .attr("dy", ".75em")
-		.attr("font-family","sans-serif")
-		.attr("font-size","12px")
-		.style("stroke","bold");
-
-    t.append("tspan")
-        .text(function(d) { return d.key; });
-    t.append("tspan")
-        .attr("dy", "1.0em")
-        .text(function(d) { return formatNumber(d.value); })
-		.attr("font-family","sans-serif")
-		.attr("font-size","12px")
-		.style("stroke","bold");
-    t.call(text);
+/* Adding a foreign object instead of a text object, allows for text wrapping */
+		g.append("foreignObject")
+			.call(rect)
+			.attr("class","foreignobj")
+			.append("xhtml:div") 
+			.attr("dy", ".35em")
+			.html(function(d) {
+				var tempval = (+d.value * 100).toFixed(2);
+				if(tempval >= 100)
+					return '<div>' + d.key + '\n'+ Math.round(tempval) + '</div>';
+				else
+					return '<div>' + d.key + '\n'+ tempval + '</div>';
+				})
+			.attr("class","textdiv"); //textdiv class allows us to style the text easily with CSS
 
     g.selectAll("rect")
         .style("fill", function(d) { return color(d.college); });
@@ -226,11 +231,15 @@ var formatNumber = d3.format(",d");
 
       // Transition to the new view.
       t1.selectAll(".ptext").call(text).style("fill-opacity", 0);
-      t1.selectAll(".ctext").call(text2).style("fill-opacity", 0);
       t2.selectAll(".ptext").call(text).style("fill-opacity", 1);
-      t2.selectAll(".ctext").call(text2).style("fill-opacity", 1);
       t1.selectAll("rect").call(rect);
       t2.selectAll("rect").call(rect);
+
+	  t1.selectAll(".textdiv").style("display", "none"); /* added */
+	  t1.selectAll(".foreignobj").call(foreign); /* added */
+	  t2.selectAll(".textdiv").style("display", "block"); /* added */
+	  t2.selectAll(".foreignobj").call(foreign); /* added */ 			
+
 
       // Remove the old node when the transition is finished.
       t1.remove().each("end", function() {
@@ -240,14 +249,12 @@ var formatNumber = d3.format(",d");
     }
 
     return g;
+	  }
   }
 
   function text(text) {
-    text.selectAll("tspan")
-        .attr("x", function(d) { return x(d.x) + 6; })
     text.attr("x", function(d) { return x(d.x) + 6; })
-        .attr("y", function(d) { return y(d.y) + 6; })
-        .style("opacity", function(d) { return this.getComputedTextLength() < x(d.x + d.dx) - x(d.x) ? 1 : 0; });
+        .attr("y", function(d) { return y(d.y) + 6; });
   }
 
   function text2(text) {
@@ -262,14 +269,19 @@ var formatNumber = d3.format(",d");
         .attr("width", function(d) { return x(d.x + d.dx) - x(d.x); })
         .attr("height", function(d) { return y(d.y + d.dy) - y(d.y); });
   }
-
+ function foreign(foreign){ /* added */
+			foreign.attr("x", function(d) { return x(d.x); })
+			.attr("y", function(d) { return y(d.y); })
+			.attr("width", function(d) { return x(d.x + d.dx) - x(d.x); })
+			.attr("height", function(d) { return y(d.y + d.dy) - y(d.y); });
+		}
+ 
   function name(d) {
     return d.parent
-        ? name(d.parent) + " / " + d.key /*+ " (" + formatNumber(d.value) + ")"*/
-        : d.key /*+ " (" + formatNumber(d.value) + ")"*/;
+        ? name(d.parent) + " / " + d.key: d.key;
   }
 }
-
+}
 
 
 

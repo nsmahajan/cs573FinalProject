@@ -1,3 +1,11 @@
+.mapTitle{
+	font-size: 1.5em;
+	color: black;
+    margin-left: 250px;
+	font-family: cursive;
+    font-weight: bold;
+	text-align:center;
+}
 .landingPage{
 	height:100%;
     background-size: cover;
@@ -47,6 +55,7 @@ path:hover {
 .q3-10 { fill:rgb(217,91,67); }
 
 .compareButton {
+	margin-top: 2%;
 	display: inline-block;
 	padding: 10px 20px;
 	font-size: 16px;

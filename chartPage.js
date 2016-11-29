@@ -174,19 +174,26 @@ ChartPage.prototype.checkStateCode = function(collegeRow){
 }
 
 ChartPage.prototype.checkSchoolType = function(collegeRow){
-	if((this.schoolFilters["privateNonProfit"].selected == true && this.schoolFilters["privateNonProfit"].value == collegeRow.CONTROL)||
+	if(((this.schoolFilters["privateNonProfit"].selected == true && this.schoolFilters["privateNonProfit"].value == collegeRow.CONTROL)||
 		(this.schoolFilters["privateProfit"].selected == true && this.schoolFilters["privateProfit"].value == collegeRow.CONTROL)||
 		(this.schoolFilters["public"].selected == true && this.schoolFilters["public"].value == collegeRow.CONTROL))
+		|| (this.schoolFilters["privateNonProfit"].selected == false && 
+			this.schoolFilters["privateProfit"].selected == false && 
+			this.schoolFilters["public"].selected == false))
 		return true;
 		
 	return false;
 }
 
 ChartPage.prototype.checkPopulation = function(collegeRow){
-	if((this.populationFilters["small"].selected == true && this.populationFilters["small"].min <= +collegeRow.UGDS && +collegeRow.UGDS < this.populationFilters["small"].max)||
+	if(((this.populationFilters["small"].selected == true && this.populationFilters["small"].min <= +collegeRow.UGDS && +collegeRow.UGDS < this.populationFilters["small"].max)||
 		(this.populationFilters["medium"].selected == true && this.populationFilters["medium"].min <= +collegeRow.UGDS && +collegeRow.UGDS <= this.populationFilters["medium"].max)||
 		(this.populationFilters["large"].selected == true && this.populationFilters["large"].min < +collegeRow.UGDS) ||
-		(this.populationFilters["null"].selected == true && collegeRow.UGDS == "NULL"))
+		(this.populationFilters["null"].selected == true && collegeRow.UGDS == "NULL")) 
+		|| (this.populationFilters["small"].selected == false && 
+			this.populationFilters["medium"].selected == false && 
+			this.populationFilters["large"].selected == false && 
+			this.populationFilters["null"].selected == false))
 		return true;
 		
 	return false;

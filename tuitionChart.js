@@ -118,18 +118,22 @@ TuitionChart.prototype.updateChart = function(selectedCollege) {
 				.attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
 
 	legend.append("rect")
-		.attr("x", this.width - 18)
+		.attr("x", this.width - 108)
 		.attr("width", 18)
 		.attr("height", 18)
 		.style("fill", this.color);
 
 	legend.append("text")
-		.attr("x", this.width - 24)
+		.attr("x", this.width - 88)
 		.attr("y", 9)
 		.attr("dy", ".35em")
-		.style("text-anchor", "end")
+		.style("text-anchor", "start")
 		.style("fill", "black")
-		.text(function(d) {return d; });
+		.text(function(d) {
+			if(d =="TUITIONFEE_OUT")
+				return "Outstate Tuition Fee";
+			else
+				return "Instate Tuition Fee"; });
 	}
 }
 

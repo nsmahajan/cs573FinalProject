@@ -7,6 +7,7 @@
 <body>
 <div class="landingPage" style="display:none">
 	<div class="mapContainer">
+		<label class="mapTitle"for="speed">Distribution of Undergraduate Colleges/Universities Across the US</label>
 		<svg class = "usmap" ></svg>
 	</div>
 	<div class="compareButtonContainer">
@@ -48,14 +49,14 @@
 		<div class="rightPanel" style="margin-top: 1%;">
 			<div>
 				<div>
-					<label class="collegeTitle"for="speed">Select a college</label>
+					<label class="collegeTitle"for="speed">Select colleges to compare (upto 10)</label>
 				</div>
 				<select class="college" name="college" id="college">
 				</select>
 			</div>
 			<div class="chartButtonContainer">
 				<button type="button" class = "buttonStyle tuitionButton">Tuition Fee</button>
-				<button type="button" class = "buttonStyle loanButton">Loan</button>
+				<button type="button" class = "buttonStyle loanButton">Federal/PELL Funding</button>
 				<button type="button" class = "buttonStyle degreeButton">Courses Offered</button>
 				<button type="button" class = "buttonStyle salaryButton">Salary</button>
 			</div>
@@ -72,7 +73,7 @@
 				<div class= "noDataSalary"></div>
 			</div>
 			<div class="rankContainer" style="display:none">	
-				<svg class = "rankChart" width="750" height="480"></svg>
+				<svg class = "rankChart" width="850" height="480"></svg>
 			</div>
 		</div>
 	</div>
