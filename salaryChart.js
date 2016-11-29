@@ -33,7 +33,7 @@ SalaryChart.prototype.updateChart = function(selectedCollege) {
 		{
 			if(d.INSTNM == selectedCollege[i])
 			{
-				if(d.MN_EARN_WNE_P10 != "NULL"){
+				if(d.MN_EARN_WNE_P10 != "NULL" && d.MN_EARN_WNE_P10 != "PrivacySuppressed"){
 					filteredData.push(d);
 				}else{
 					noDataAvailable.push(selectedCollege[i]);

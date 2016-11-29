@@ -162,6 +162,11 @@ input[type=checkbox] {
 	background-color: #3e8e41
 }
 
+.buttonStyle:focus {
+	background-color: #3e8e41
+}
+
+
 .buttonStyle:active {
 	background-color: #3e8e41;
 	box-shadow: 0 5px #666;
@@ -250,4 +255,21 @@ text {
 
 .children:hover rect.child {
   fill: #bbb;
+}
+
+.textdiv {
+    font-family: "Open Sans",Helvetica,Arial,sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+    margin: 7px;
+	cursor: pointer;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 90%;
+	white-space: pre-line;
+}
+
+.textdiv div {
+	margin-top:2%;
+
 }
