@@ -73,14 +73,18 @@ LoanChart.prototype.updateChart = function(selectedCollege) {
 		.range([_self.heightSlope, 0]));
 	}));
 	
-	var tip = d3.tip()
+	/*var tip = d3.tip()
 				  .attr('class', 'd3-tip')
 				  .offset([-10, 0])
 				  .html(function(d) {
 					return d.names +"<br>Total: " + d.UGDS+" "+ "students"+"<br> Pell Grant: " + Math.round((d.PELL/100) * d.UGDS)+" "+"students"+ "<br>Federal Grant:" + Math.round((d.Federal/100) * d.UGDS)+" "+"students";
 				  });
 				
-	svgParallel.call(tip);			  
+	svgParallel.call(tip);	*/
+
+	var tooltip = d3.select('body').append('div')
+				.attr('class', 'hidden tooltip');
+				
 	// Add grey background lines for context.
 	background = svgParallel.append("g")
 							.attr("class", "background")
@@ -99,8 +103,20 @@ LoanChart.prototype.updateChart = function(selectedCollege) {
 							.attr("d", path)	  
 							.attr("stroke", function(d) { return colorSlope((d.names));})
 							.attr("stroke-width", "1.5px")
-							.on("mouseover", tip.show)
-							.on("mouseout", tip.hide);
+							.on('mousemove', function(d) {
+								var mouse = d3.mouse(svg.node()).map(function(d) {
+									return parseInt(d);
+								});
+								tooltip.classed('hidden', false)
+									.attr('style', 'left:' + (mouse[0] + 120) +
+											'px; top:' + (mouse[1] - 5) + 'px')
+									.html(d.names +"<br>Total: " + d.UGDS+" "+ "students"+"<br> Pell Grant: " + Math.round((d.PELL/100) * d.UGDS)+" "+"students"+ "<br>Federal Grant:" + Math.round((d.Federal/100) * d.UGDS)+" "+"students");
+							})
+							.on('mouseout', function() {
+								tooltip.classed('hidden', true);
+							});
+							//.on("mouseover", tip.show)
+							//.on("mouseout", tip.hide);
 
  
 	// Add a group element for each dimension.
