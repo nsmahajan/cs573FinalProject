@@ -2,6 +2,7 @@ function ChartPage(data, parentPage){
 	this.parentPage = parentPage;
 	this.data = data;
 	this.selectedCollege = [];
+	this.selectedStateCode = [];
 	this.tuitionChart = new TuitionChart(this);
 	this.treeMap = new TreeMap(this);
 	this.loanChart = new LoanChart(this);
@@ -122,11 +123,13 @@ ChartPage.prototype.showFilters = function() {
 	$('.schoolCheckbox').change(function() {
 		_self.schoolFilters[this.value].selected = $(this).is(':checked');
 		_self.filterApplied();
+		_self.filterSelectedCollege();
     });
 	
 	$('.populationCheckbox').change(function() {
 		_self.populationFilters[this.value].selected = $(this).is(':checked');
 		_self.filterApplied();
+		_self.filterSelectedCollege();
     });
 }
 
@@ -134,6 +137,7 @@ ChartPage.prototype.filterApplied = function() {
 	var optionHTML ="";
 	
 	for(var i = 0; i < this.data.collegeData.length; i++){
+		
 		if(this.checkStateCode(this.data.collegeData[i]) && this.checkPopulation(this.data.collegeData[i]) && this.checkSchoolType(this.data.collegeData[i])){
 			optionHTML += '<option value="'+ this.data.collegeData[i].INSTNM + '">' + this.data.collegeData[i].INSTNM + '</option>';
 		}
@@ -157,13 +161,61 @@ ChartPage.prototype.filterApplied = function() {
     });
 }
 
+ChartPage.prototype.filterSelectedCollege = function() {	
+	var temp = this.selectedCollege;
+	this.selectedCollege = [];
+	for(var j=0; j<this.data.collegeData.length; j++)
+	{
+		for(var i = 0; i < temp.length; i++){		
+			if(this.data.collegeData[j].INSTNM == temp[i])
+			{
+				if(this.checkAllStateCode(this.data.collegeData[j]) && this.checkPopulation(this.data.collegeData[j]) && this.checkSchoolType(this.data.collegeData[j])){
+					this.selectedCollege.push(temp[i]);					
+				}
+			}
+		}
+	}
+	
+	if(temp.length != this.selectedCollege.length)
+	{
+	
+		$(".listItem").remove();
+		for(var i=0; i<this.selectedCollege.length; i++)
+		{
+			this.updateSelectedCollege(this.selectedCollege[i]);
+		}
+		this.updateAllCharts();
+	}
+	
+	
+}
+
 ChartPage.prototype.checkStateCode = function(collegeRow){
 	var selectedState = $( "#state" ).val();
+	this.selectedStateCode.push(selectedState);
 	var stateCode;
 	for(var i = 0; i < this.data.usStates.length; i++){
 		if(this.data.usStates[i].name == selectedState){
 			stateCode = this.data.usStates[i].code;
 			break;
+		}
+	}
+	
+	if(collegeRow.STABBR == stateCode)
+		return true;
+	
+	return false;
+}
+
+ChartPage.prototype.checkAllStateCode = function(collegeRow){
+	var stateCode;
+	for(var i = 0; i < this.data.usStates.length; i++){
+		for(var j=0; j<this.selectedStateCode.length; j++)
+		{
+			if(this.data.usStates[i].name == this.selectedStateCode[j]){
+				stateCode = this.data.usStates[i].code;
+				break;
+			}
 		}
 	}
 	
@@ -204,6 +256,7 @@ ChartPage.prototype.updateSelectedCollege = function(college){
 	var _self = this;
 	$(".deleteButton").off();
 	
+	
 	var optionHTML = '<div class="listItem"><div class="name" style="width: 93%">' + college + '</div><div class="deleteButton"></div></div>';
 	$(".listOfSelectedColleges").append(optionHTML);
 	
@@ -212,6 +265,11 @@ ChartPage.prototype.updateSelectedCollege = function(college){
 		$(this).parent().remove();
 		_self.collegeRemoved(deletedCollege);
     });
+}
+
+ChartPage.prototype.deleteUnSelectedCollege = function(college){
+	
+	
 }
 
 ChartPage.prototype.collegeRemoved = function(collegeName){

@@ -15,7 +15,7 @@ function SalaryChart(parentPage){
 			.range([this.yOffset, 0]);
 
 	this.color = d3.scale.ordinal()
-			.range(["#98abc5"]);
+			.range(["#8da0cb"]);
 }
 
 SalaryChart.prototype.updateChart = function(selectedCollege) {
@@ -63,7 +63,7 @@ SalaryChart.prototype.updateChart = function(selectedCollege) {
 	var values = d3.keys(filteredData[0]).filter(function(key) { return (key == columnName); });
 
 	filteredData.forEach(function(d) {
-		d.fees = values.map(function(name) {
+		d.salary = values.map(function(name) {
 			var temp = d[name];
 			if(d[name] == "NULL")
 				temp = 0;
@@ -72,15 +72,18 @@ SalaryChart.prototype.updateChart = function(selectedCollege) {
 	});
 
 
+	filteredData.sort(function(a,b) {
+		return +a.salary[0].value - +b.salary[0].value;});
+		
 	this.x.domain(filteredData.map(function(d) { return d.INSTNM; }));
-	this.y.domain([0, d3.max(filteredData, function(d) { return d3.max(d.fees, function(d) { return d.value; }); })]);
+	this.y.domain([0, d3.max(filteredData, function(d) { return d3.max(d.salary, function(d) { return d.value; }); })]);
 
 	g.append("g")
 	.attr("class", "x axis")
 	.attr("transform", "translate(0," + this.yOffset + ")")
 	.call(x_axis)
 	.selectAll(".tick text")
-	.style("font-size","12px")
+	.style("font-size","0.9em")
 	.call(this.wrap, this.x.rangeBand());
 		  
 	g.append("g")
@@ -102,7 +105,7 @@ SalaryChart.prototype.updateChart = function(selectedCollege) {
 		   
 		  
 	college.selectAll("rect")
-		.data(function(d) { return d.fees; })
+		.data(function(d) { return d.salary; })
 		.enter().append("rect")
 		.attr("width", this.x.rangeBand())
 		.attr("x", function(d) { return _self.x(d.name); })
@@ -128,6 +131,7 @@ SalaryChart.prototype.updateChart = function(selectedCollege) {
 		.attr("y", -20)
 		.attr("dy", ".35em")
 		.style("text-anchor", "start")
+		.style("font-size","0.9em")
 		.text("Average Earnings");
 	}
 }

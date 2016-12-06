@@ -1,0 +1,82 @@
+html, body {
+    height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+.introMainContainer{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-top: 1%;
+}
+
+.wordcloud{
+	background-image: url("wordcloud.png");
+	height:250px;
+	width:560px;
+}
+
+.wordcloud{
+	background-image: url("wordcloud.png");
+	background-size: cover;
+    background-repeat: round;
+	height:250px;
+	width:300px;
+}
+
+.confusedStudent{
+	background-image: url("confusedCollegeGarduate.gif");
+	background-size: cover;
+    background-repeat: round;
+	height:250px;
+	width:200px;
+}
+
+.processBookImage{
+	background-image: url("openbook.png");
+	background-size: cover;
+    background-repeat: round;
+	height:50px;
+	width:70px;
+}
+
+.screenCastImage{
+	background-image: url("screencast1.png");
+	background-size: cover;
+    background-repeat: round;
+	height:50px;
+	width:60px;
+}
+
+.ccImage{
+	background-image: url("CC.jpg");
+	background-size: cover;
+    background-repeat: round;
+	height:50px;
+	width:50px;
+}
+
+.links{
+	display: flex;
+    justify-content: center;
+	font-family: myFirstFont;
+	font-size: 1.5em;
+}
+
+@font-face {
+    font-family: myFirstFont;
+    src: url(NiconneRegular.woff);
+}
+
+.descriptionContainer {
+	width: 100%;
+	height: 100%;
+	font-family: myFirstFont;
+	font-size: 1.5em;
+}
+
+.descriptionText {
+	width: 90%;
+    margin: auto;
+}

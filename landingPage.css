@@ -1,11 +1,21 @@
 .mapTitle{
 	font-size: 1.5em;
 	color: black;
+    margin-left: 220px;
+	font-family: cursive;
+    font-weight: bold;
+	text-align:center;
+}
+
+.rankTitle{
+	font-size: 1.0em;
+	color: black;
     margin-left: 250px;
 	font-family: cursive;
     font-weight: bold;
 	text-align:center;
 }
+
 .landingPage{
 	height:100%;
     background-size: cover;
@@ -21,11 +31,15 @@
 	text-align: center;
 }
 
+.maplegend{
+	height:100%;
+	margin-top: 10%;
+}
+
 .usmap{
-	width:80%;
+	width:100%;
 	height:100%;
 	margin-left: 10%;
-    margin-right: 10%;
 }
 
 path:hover {
@@ -43,8 +57,9 @@ path:hover {
 	height: 45x;                 
 	padding: 10px;             
 	font: 14px sans-serif;        
-	background: white;   
-	border: 0px;      
+	background: white;
+	border-style: dotted;
+    border-width: 1.5px;
 	border-radius: 8px;           
 	pointer-events: none;         
 }
