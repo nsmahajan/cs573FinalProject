@@ -14,6 +14,8 @@ TreeMap.prototype.updateChart = function(selectedCollege){
 	var courses = this.parentPage.data.courses;
 	var dat = this.parentPage.data.collegeData;
 	var result = [];
+	var noDataAvailable = [];
+	var students = [];
 	
 	d3.select('.grandparent').remove();
 	d3.select('.grandRect').remove();
@@ -36,7 +38,10 @@ TreeMap.prototype.updateChart = function(selectedCollege){
 				
 	  var lines=filteredData;
 	  for(var i=0;i<lines.length;i++){
-		  var obj = {};
+		  var obj = {},
+			stud_obj = {};
+		  var tempResult = [];
+		  var dataAllNull = true;
 		  var currentline=lines[i];
 		  for(var j=0;j<headers.length;j++)
 		  {
@@ -46,25 +51,45 @@ TreeMap.prototype.updateChart = function(selectedCollege){
 				{
 				if((key == headers[j]) && (currentline.hasOwnProperty(key)) && (courses[course].code == key) )
 				{
-					if(currentline[key] != "0"){
+					if(currentline[key] != "0" && currentline[key] != "NULL"){
+						dataAllNull = false;
 						obj={};
+						stud_obj={};
 						obj["key"] = courses[course].course;
 						obj["college"]=currentline.INSTNM;
 						obj["value"]= +currentline[key];//+((+currentline[key] * 100).toFixed(2));
-						result.push(obj);
+						//result.push(obj);
+						stud_obj["key"] = courses[course].course;
+						stud_obj["college"] = currentline.INSTNM;
+						stud_obj["value"] = currentline.UGDS;
+						tempResult.push(obj);
+						students.push(stud_obj);
 					}
 				}
 				}
 			}
 		  }
+		  
+		  console.log(tempResult);
+		  if(dataAllNull == true){
+			noDataAvailable.push(currentline.INSTNM);
+		  }else{
+			  for(var k = 0;k < tempResult.length; k++)
+				 result.push(tempResult[k]); 
+		  }
 	  }
-	  
+	
+	this.noData(noDataAvailable);
+	
 	var svg = d3.select('.rankChart')
 	var margin = {top: 40, right: 0, bottom: 0, left: 0};
 	var width = +svg.attr("width") - margin.left - margin.right;
 	var height = +svg.attr("height") - margin.top - margin.bottom - 36 + 16;
 	var transitioning;
   
+	var tooltipCourse = d3.select('body').append('div')
+				.attr('class', 'tooltipCourse hidden');
+	
 	var color = d3.scale.ordinal()
 				.domain(function(d) { return d.college;})
 				.range(["#a6cee3","#1f78b4","#b2df8a","#33a02c","#fb9a99","#e31a1c","#fdbf6f","#ff7f00","#cab2d6","#6a3d9a"]);
@@ -102,7 +127,7 @@ TreeMap.prototype.updateChart = function(selectedCollege){
       .attr("y", 6 - margin.top)
       .attr("dy", ".75em")
 	  .attr("font-family","sans-serif")
-	  .attr("font-size","15px");
+	  .attr("font-size","1em");
     
 var data = d3.nest().key(function(d) { return d.college; }).key(function(d) { return d.key; }).entries(result);
 var root = {key: "College", values: data};
@@ -169,7 +194,45 @@ var formatNumber = d3.format(",d");
 
     g.filter(function(d) { return d._children; })
         .classed("children", true)
-        .on("click", transition);
+        .on("click", transition)
+		.on('mousemove', function(d) {
+			  // this variable will be used in a loop to store the current node being inspected
+			  var currentNode = d;
+			  // this array will hold the names of each subsequent parent node
+			  var nameList = [currentNode.name];
+			  // as long as the current node has a parent...
+			  while (typeof currentNode.parent === 'Object') {
+				// go up a level in the hierarchy
+				currentNode = currentNode.parent;
+				// add the name to the beginning of the list
+				nameList.unshift(currentNode.key);
+			  }
+			  // now nameList should look like ['flare','animate','interpolate']
+			  //  join the array with slashes (as you have in your example)
+			  nameList = nameList.join('/');
+			  // now nameList should look like 'flare/animate/interpolate'
+			  //  use this to set the tooltip text
+			  var temp =0;
+			  for(var i=0; i<students.length; i++)
+			  {
+				  if((students[i].college == currentNode.key) || (students[i].college == currentNode.parent.key))
+				  {
+					  temp = students[i].value;
+				  }
+			  }
+			  var mouse = d3.mouse(svg.node()).map(function(d) {
+				return parseInt(d);
+				});
+				tooltipCourse.classed('hidden', false)
+				.attr('style', 'left:' + (mouse[0] + 150) +
+						'px; top:' + (mouse[1] +90) + 'px')
+				.html("Students: " + Math.round(currentNode.value * temp));
+		
+			  //$('#tooltip').text('Mouse hovering ' + nameList + '. Cell size = ' + d.area);
+			})
+			.on('mouseout', function() {
+			tooltipCourse.classed('hidden', true);
+		});
 
     var children = g.selectAll(".child")
         .data(function(d) { return d._children || [d]; })
@@ -184,7 +247,7 @@ var formatNumber = d3.format(",d");
         .attr("class", "ctext")
         .text(function(d) { return d.key; })
 		.attr("font-family","sans-serif")
-		.attr("font-size","13px");
+		.attr("font-size","0.9em");
         
     g.append("rect")
         .attr("class", "parent")
@@ -197,11 +260,20 @@ var formatNumber = d3.format(",d");
 			.append("xhtml:div") 
 			.attr("dy", ".35em")
 			.html(function(d) {
-				var tempval = (+d.value * 100).toFixed(2);
-				if(tempval >= 100)
-					return '<div>' + d.key + '\n'+ Math.round(tempval) + '</div>';
-				else
-					return '<div>' + d.key + '\n'+ tempval + '</div>';
+				if(d._children == undefined)
+					{
+						 var temp =0;
+						  for(var i=0; i<students.length; i++)
+						  {
+							  if((students[i].college == d.college) || (students[i].college == d.parent.key))
+							  {
+								  temp = students[i].value;
+							  }
+						  }
+						return '<div>' + d.key + '<br>' + Math.round(d.value * temp)+'</div>';
+					}
+					else
+						return '<div>' + d.key +'</div>';
 				})
 			.attr("class","textdiv"); //textdiv class allows us to style the text easily with CSS
 
@@ -283,6 +355,24 @@ var formatNumber = d3.format(",d");
 }
 }
 
+TreeMap.prototype.noData = function(noDataAvailable) {
+	var htmlContent = "* Courses data currently not available for ";
+	for(var i = 0; i < noDataAvailable.length; i++){
+		htmlContent += noDataAvailable[i];
+		
+		if(i == noDataAvailable.length - 2 && noDataAvailable.length > 1){
+			htmlContent += " and "
+		}else if(i == noDataAvailable.length - 1){
+			htmlContent += ".";
+		}else {
+			htmlContent += ", ";
+		}
+	}
+	
+	if(noDataAvailable.length != 0){
+		$(".noDataCourses").html(htmlContent);
+	}else{
+		$(".noDataCourses").html("");
+	}
 
-
-
+}

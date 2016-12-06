@@ -12,7 +12,7 @@ var valueCount = [];
 LandingPage.prototype.show = function() {
 	var _self = this;
     var svg = d3.select(".usmap");
-	//.domain([0,100,200,300,400,600,800]);
+
 	var legendText = [">600", "401-600", "301-400", "201-300","101-200", "0-100"];
 
 	var width = +svg.attr("width");
@@ -25,9 +25,8 @@ LandingPage.prototype.show = function() {
 				.projection(projection);
 
 	var color = d3.scale.linear()
-				//.range(["#f7fcfd","#e5f5f9","#ccece6","#99d8c9", "#66c2a4", "#41ae76", "#238b45", "#006d2c", "#00441b"])
-				.range(["#ffffcc","#addd8e","#78c679","#41ab5d","#238443","#006837"])
-				.domain([0,200,300,400,600,800]);
+				.range(["#ffffcc","#41ab5d","#006837"])
+				.domain([2,400,800]);
 	
 	var data1 = d3.nest()
 				  .key(function(d) {
@@ -37,9 +36,6 @@ LandingPage.prototype.show = function() {
 				   return d3.sum(d, function(g) {return 1; });
 				  }).entries(this.data.collegeData);
 	
-	//var color = ["#ffffcc","#d9f0a3","#addd8e","#78c679","#41ab5d","#238443","#006837"];
-
-	
 	var tooltip = d3.select('body').append('div')
 				.attr('class', 'hidden tooltip');
 				
@@ -48,27 +44,6 @@ LandingPage.prototype.show = function() {
 	var quantize = d3.scale.quantize()
 					.domain([d3.min(data1, function(d) { return d.values; }), d3.max(data1, function(d) { return d.values; })])
 					.range(d3.range(9).map(function(i) { return i; }));		
-
-	var legend = svg.selectAll(".mapLegend")
-      			.attr("class", "maplegend")
-   				.data(color.domain().slice().reverse())
-   				.enter()
-   				.append("g")
-     			.attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
-
-  	legend.append("rect")
-		  .attr("x",0)
-		  .attr("y",25)
-   		  .attr("width", 18)
-   		  .attr("height", 18)
-   		  .style("fill", color);
-
-  	legend.append("text")
-  		  .data(legendText)
-      	  .attr("x", 24)
-      	  .attr("y", 34)
-      	  .attr("dy", ".25em")
-      	  .text(function(d) { return d; });
 	
 	svg.selectAll("path")
 		.data(topojson.feature(this.data.us, this.data.us.objects.states).features)
@@ -85,13 +60,58 @@ LandingPage.prototype.show = function() {
 				return parseInt(d);
 			});
 			tooltip.classed('hidden', false)
-				.attr('style', 'left:' + (mouse[0] + 150) +
-						'px; top:' + (mouse[1] - 25) + 'px')
+				.attr('style', 'left:' + (mouse[0] + 120) +
+						'px; top:' + (mouse[1] - 5) + 'px')
 				.html(_self.getSchoolTypeCount(d));
 		})
 		.on('mouseout', function() {
 			tooltip.classed('hidden', true);
 		});
+		
+	var w = 140, h = 400;
+
+			var key = d3.select(".maplegend").append("svg")
+						 .attr("width", w).attr("height", h);
+
+			var legend = key.append("defs")
+							.append("svg:linearGradient")
+							.attr("id", "gradient")
+							.attr("x1", "100%")
+							.attr("y1", "0%")
+							.attr("x2", "100%")
+							.attr("y2", "100%")
+							.attr("spreadMethod", "pad");
+
+			legend.append("stop")
+				  .attr("offset", "0%")
+				  .attr("stop-color", "#006837")
+				  .attr("stop-opacity", 1);
+
+			legend.append("stop")
+				  .attr("offset", "100%")
+				  .attr("stop-color", "#ffffcc")
+				  .attr("stop-opacity", 1);
+
+			key.append("rect")
+			   .attr("width", w - 100)
+			   .attr("height", h - 100)
+			   .style("fill", "url(#gradient)")
+			   .attr("transform", "translate(0,10)");
+
+			var y = d3.scale.linear().range([300, 0]).domain([2, 800]);
+
+			var yAxis = d3.svg.axis().scale(y).orient("right");
+
+			key.append("g")
+			   .attr("class", "y axis")
+			   .attr("transform", "translate(41,10)")
+			   .call(yAxis).append("text")
+			   .attr("transform", "rotate(-90)")
+			   .attr("x", 0)
+			   .attr("y", 38)
+			   .attr("dy", ".71em")
+			   .style("text-anchor", "end")
+			   .text("(number of colleges)");
 };
 
 LandingPage.prototype.getStateCount = function(d, data1) {
@@ -122,11 +142,13 @@ LandingPage.prototype.getSchoolTypeCount = function(d) {
 	var privateNonProfitCount = 0;
 	
 	var stateName = "";
+	var stateActualName = "";
 	var value = "";
 	
 	for(var i = 0; i < this.data.usStates.length; i++){
 		if(d.id == this.data.usStates[i].id){
 			stateName = this.data.usStates[i].code;
+			stateActualName = this.data.usStates[i].name;
 			break;
 		}
 	}
@@ -149,6 +171,6 @@ LandingPage.prototype.getSchoolTypeCount = function(d) {
 		}
 	}
 	
-	value = "Total : " + (publicCount+privateNonProfitCount+privateProfitCount) +"<br>Public : " + publicCount + "<br> Private ( Profit ) : " + privateProfitCount + "<br> Private ( Non-Profit ) : " + privateNonProfitCount;
+	value = '<div style="text-align:center">'+ stateActualName + "</div>"+ "Total : " + (publicCount+privateNonProfitCount+privateProfitCount) +"<br>Public : " + publicCount + "<br> Private ( Profit ) : " + privateProfitCount + "<br> Private ( Non-Profit ) : " + privateNonProfitCount;
 	return value;
 }

@@ -5,6 +5,7 @@ function LoanChart(parentPage){
 	this.marginSlope = {top: 30, right: 10, bottom: 10, left: 10},
     this.widthSlope = +this.svg.attr("width") - this.marginSlope.left - this.marginSlope.right,
     this.heightSlope = +this.svg.attr("height") - this.marginSlope.top * 3 - this.marginSlope.bottom;
+	
 
 	this.xSlope = d3.scale.ordinal().rangePoints([50, 500],1),
 		
@@ -19,12 +20,16 @@ LoanChart.prototype.updateChart = function(selectedCollege) {
 	var _self = this;
 	
 	d3.select(".parallelCo").remove(); 
+	d3.select(".tooltiploan").remove();
 	
-	var colorSlope = d3.scale.category10();
-	var c_value = function(d) { return d.names;};
+		var colorSlope = d3.scale.ordinal()
+				.range(["#a6cee3","#1f78b4","#b2df8a","#33a02c","#fb9a99","#e31a1c","#fdbf6f","#ff7f00","#cab2d6","#6a3d9a"]);
+
 	var ySlopeAxis = d3.svg.axis()
                   .scale(this.ySlopeScale);
 
+				  
+	
 		
 	var line = d3.svg.line(),
 		axis = d3.svg.axis().orient("left"),
@@ -50,6 +55,7 @@ LoanChart.prototype.updateChart = function(selectedCollege) {
 					eval(name).names = d.INSTNM;
 					eval(name).PELL = (100 * d.PCTPELL);
 					eval(name).Federal = (100 * d.PCTFLOAN);
+					eval(name).UGDS = d.UGDS;
 					data.push(name);
 				}else{
 					noDataAvailable.push(selectedCollege[i]);
@@ -62,11 +68,19 @@ LoanChart.prototype.updateChart = function(selectedCollege) {
 	if(data.length != 0){
   // Extract the list of dimensions and create a scale for each.
 	this.xSlope.domain(dimensions = d3.keys(data[0]).filter(function(d) {
-		return d != "names" &&(_self.ySlope[d] = d3.scale.linear()
+		return d != "names" && d!= "UGDS" &&(_self.ySlope[d] = d3.scale.linear()
 		.domain([0,100])
 		.range([_self.heightSlope, 0]));
 	}));
-  
+	
+	var tip = d3.tip()
+				  .attr('class', 'd3-tip')
+				  .offset([-10, 0])
+				  .html(function(d) {
+					return d.names +"<br>Total: " + d.UGDS+" "+ "students"+"<br> Pell Grant: " + Math.round((d.PELL/100) * d.UGDS)+" "+"students"+ "<br>Federal Grant:" + Math.round((d.Federal/100) * d.UGDS)+" "+"students";
+				  });
+				
+	svgParallel.call(tip);			  
 	// Add grey background lines for context.
 	background = svgParallel.append("g")
 							.attr("class", "background")
@@ -83,9 +97,11 @@ LoanChart.prototype.updateChart = function(selectedCollege) {
 							.data(data)
 							.enter().append("path")
 							.attr("d", path)	  
-							.attr("stroke", function(d) { return colorSlope(c_value(d));})
-							.attr("stroke-width", "1.5px");
- 
+							.attr("stroke", function(d) { return colorSlope((d.names));})
+							.attr("stroke-width", "1.5px")
+							.on("mouseover", tip.show)
+							.on("mouseout", tip.hide);
+
  
 	// Add a group element for each dimension.
 	var g = svgParallel.selectAll(".dimension")
@@ -103,6 +119,7 @@ LoanChart.prototype.updateChart = function(selectedCollege) {
 	.attr("stroke-width","1.5px")
 	.attr("y", -15)
 	.attr("fill", "black")
+	.style("font-size","0.9em")
 	.text(function(d) { return d+" Grant"; });
 	
 	// title
@@ -110,10 +127,10 @@ LoanChart.prototype.updateChart = function(selectedCollege) {
 	  .attr("class", "title")
 	  .attr("transform", "translate(" +0 + "," + 0+ ")")
 	  .append("text")
-	  .attr("x", 60)
+	  .attr("x", 85)
 	  .attr("y", 20)
-	  .attr("font-size", 15)
-	  .attr("font-family", "sans-serif")
+	  .style("font-size", "0.9em")
+	  .style("font-family", "sans-serif")
 	  .text("Percentage(%) of Students who received PELL/Federal Funding");
 
 	// legend
@@ -136,6 +153,7 @@ LoanChart.prototype.updateChart = function(selectedCollege) {
 		.attr("y", 9)
 		.attr("dy", ".35em")
 		.style("text-align", "left")
+		.style("font-size","0.9em")
 		.text(function(d) { return d;})
 
 	// Returns the path for a given data point.

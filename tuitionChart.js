@@ -17,13 +17,19 @@ function TuitionChart(parentPage){
 		.range([this.yOffset, 0]);
 
 	this.color = d3.scale.ordinal()
-		.range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]),
+		.range(["#66c2a5","#fc8d62"]),
 		c_value = function(d) { return d.name;};
 }
 
 TuitionChart.prototype.updateChart = function(selectedCollege) {
+	
+	
 	var _self = this;
 	d3.select(".barGroup").remove(); 
+	this.svg.selectAll('.legend').remove();
+	
+	if(selectedCollege.length > 0)
+	{
 	
 	var filteredData = [];
 	var noDataAvailable = [];
@@ -56,6 +62,10 @@ TuitionChart.prototype.updateChart = function(selectedCollege) {
 		
 	var tuitionFee = d3.keys(filteredData[0]).filter(function(key) { return (key == "TUITIONFEE_IN" || key == "TUITIONFEE_OUT"); });
 
+	filteredData.sort(function(a,b) {
+		return (+a.TUITIONFEE_OUT + +a.TUITIONFEE_IN) - (+b.TUITIONFEE_IN + +b.TUITIONFEE_OUT);});
+
+	
 	filteredData.forEach(function(d) {
 		d.fees = tuitionFee.map(function(name) {
 			var temp = d[name];
@@ -78,7 +88,7 @@ TuitionChart.prototype.updateChart = function(selectedCollege) {
 	.attr("transform", "translate(0," + this.yOffset + ")")
 	.call(x_axis)
 	.selectAll(".tick text")
-	.style("font-size","12px")
+	.style("font-size","0.9em")
 	.call(this.wrap, this.x1.rangeBand());
 		  
 	var yAxis = g.append("g")
@@ -86,12 +96,12 @@ TuitionChart.prototype.updateChart = function(selectedCollege) {
 				.call(y_axis);
 	  
 	yAxis.selectAll(".tick text")
-	.style("font-size","13px");
+	.style("font-size","0.9em");
 	
 	yAxis.append("text")
 	.attr("transform", "rotate(-90)")
 	.attr("y", 6)
-	.style("font-size","13px")
+	.style("font-size","0.9em")
 	.attr("dy", ".71em")
 	.style("text-anchor", "end")
 	.text("Fees($)");
@@ -129,11 +139,13 @@ TuitionChart.prototype.updateChart = function(selectedCollege) {
 		.attr("dy", ".35em")
 		.style("text-anchor", "start")
 		.style("fill", "black")
+		.style("font-size","0.9em")
 		.text(function(d) {
 			if(d =="TUITIONFEE_OUT")
 				return "Outstate Tuition Fee";
 			else
 				return "Instate Tuition Fee"; });
+	}
 	}
 }
 
@@ -180,4 +192,5 @@ TuitionChart.prototype.noData = function(noDataAvailable) {
 	}else{
 		$(".noDataTuition").html("");
 	}
+
 }

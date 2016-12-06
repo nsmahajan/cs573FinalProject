@@ -1,97 +1,33 @@
  <!DOCTYPE html>
 <meta charset="utf-8">
 
-<link rel="stylesheet" type="text/css" href="landingPage.css"/>
-<link rel="stylesheet" type="text/css" href="style.css"/>
+<link rel="stylesheet" type="text/css" href="introductionPage.css"/>
 
 <body>
-<div class="landingPage" style="display:none">
-	<div class="mapContainer">
-		<label class="mapTitle"for="speed">Distribution of Undergraduate Colleges/Universities Across the US</label>
-		<svg class = "usmap" ></svg>
+	<div class= "introMainContainer">
+		<div class="wordcloud"></div>
+		<div class="confusedStudent"></div>
 	</div>
-	<div class="compareButtonContainer">
-		<button type="button" class = "compareButton">Compare</button>
-	</div>
-</div>
-<div class="chartPage" style="display:none">
-	<div style="display:flex;height: 96%;">
-		<div class="leftPanel" style="margin-top: 1%;">
-			<div>
-				<label class="stateTitle"for="speed">Select a state</label>
-				<select name="state" id="state">
-				</select>
-			</div>
-			<div class="schoolContainer">
-				<fieldset style="display: inline-block;">
-					<legend class="checkBoxTitle">Type of School </legend>
-					<input class='schoolCheckbox' type="checkbox" name="schoolType" value="privateNonProfit" checked='true'/>Private (Non-profit)<br />
-					<input class='schoolCheckbox' type="checkbox" name="schoolType" value="privateProfit" checked='true'/>Private (Profit)<br />
-					<input class='schoolCheckbox' type="checkbox" name="schoolType" value="public" checked='true'/>Public<br />
-				</fieldset>
-			</div>
-			<div class="populationContainer">
-				<fieldset style="display: inline-block;">
-					<legend class="checkBoxTitle">Student Population </legend>
-					<input class='populationCheckbox' type="checkbox" name="populationCount" value="small" checked='true'/>Small ( < 2000)<br />
-					<input class='populationCheckbox' type="checkbox" name="populationCount" value="medium" checked='true'/>Medium ( 2000 - 10000) <br />
-					<input class='populationCheckbox' type="checkbox" name="populationCount" value="large" checked='true'/>Large ( > 10000) <br />
-					<input class='populationCheckbox' type="checkbox" name="populationCount" value="null" checked='true'/>Null<br />
-				</fieldset>
-			</div>
-			<div style="height: 29%;">
-				<label class="stateTitle"for="speed">Selected Colleges/Universities</label>
-				<div class="listOfSelectedColleges">
-				</div>
-			</div>
-		</div>
-		
-		<div class="rightPanel" style="margin-top: 1%;">
-			<div>
-				<div>
-					<label class="collegeTitle"for="speed">Select colleges to compare (upto 10)</label>
-				</div>
-				<select class="college" name="college" id="college">
-				</select>
-			</div>
-			<div class="chartButtonContainer">
-				<button type="button" class = "buttonStyle tuitionButton">Tuition Fee</button>
-				<button type="button" class = "buttonStyle loanButton">Federal/PELL Funding</button>
-				<button type="button" class = "buttonStyle degreeButton">Courses Offered</button>
-				<button type="button" class = "buttonStyle salaryButton">Salary</button>
-			</div>
-			<div class="tuitionContainer">
-				<svg class = "barChart" width="880" height="400"></svg>
-				<div class= "noDataTuition"></div>
-			</div>
-			<div class="loanContainer" style="display:none">
-				<svg class = "loanChart" width="880" height="400"></svg>
-				<div class= "noDataLoan"></div>
-			</div>
-			<div class="salaryContainer" style="display:none">
-				<svg class = "salaryChart" width="880" height="400"></svg>
-				<div class= "noDataSalary"></div>
-			</div>
-			<div class="rankContainer" style="display:none">	
-				<svg class = "rankChart" width="850" height="480"></svg>
+	<div>
+		<div class ="descriptionContainer">
+			<div class="descriptionText" >
+				<p>Across US there are more than 7000 undergraduate colleges and in 2014, the total undergraduate enrollment in degree-granting postsecondary institutions was 17.3 million students. Undergraduate enrollment is projected to increase 14 percent from 17.3 million to 19.8 million students between 2014 and 2025.</p>
+				<p>Many factors affect the student’s decision and this decision making process can be very hectic as it requires to visit various websites to get information on interested colleges. Our goal is to present a student a comparison tool which will help him/her to compare colleges based on factors like tuition fees, popular courses offered, percentage of students receiving loan, salary after graduation etc.</p>
 			</div>
 		</div>
 	</div>
-</div>
-
+	<div class="links">
+		<div style="text-align: -webkit-center;">
+			<div class="processBookImage"></div>
+			<a href="processBook.html">Process Book</a>
+		</div>
+		<div style="text-align: -webkit-center;margin-left: 2%;margin-right: 2%;">
+			<div class="screenCastImage"></div>
+			<a href="https://www.youtube.com/watch?v=dyDZxWlEhHQ">Screencast</a>
+		</div>
+		<div style="text-align: -webkit-center;">
+			<div class="ccImage"></div>
+			<a style="width: 100px;display: block;" href="indexviz.html">College Comparator</a>
+		</div>
+	</div>
 </body>
-<script src="https:////cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js" charset="utf-8"></script>
-<script src="https://d3js.org/d3.v3.min.js"></script>
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="https://d3js.org/queue.v1.min.js"></script>
-<script src="https://d3js.org/topojson.v1.min.js"></script>
-
-<script src="main.js"></script>
-<script src="landingPage.js"></script>
-<script src="data.js"></script>
-<script src="chartPage.js"></script>
-<script src="tuitionChart.js"></script>
-<script src="loanChart.js"></script>
-<script src="salaryChart.js"></script>
-<script src="treeMap.js"></script>
