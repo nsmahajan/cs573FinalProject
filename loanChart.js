@@ -27,9 +27,6 @@ LoanChart.prototype.updateChart = function(selectedCollege) {
 
 	var ySlopeAxis = d3.svg.axis()
                   .scale(this.ySlopeScale);
-
-				  
-	
 		
 	var line = d3.svg.line(),
 		axis = d3.svg.axis().orient("left"),
@@ -38,7 +35,7 @@ LoanChart.prototype.updateChart = function(selectedCollege) {
 	title;
 	
 	var svgParallel = this.svg.append("g")
-		.attr("transform", "translate(" + this.marginSlope.left + "," + this.marginSlope.top * 2 + ")")
+		.attr("transform", "translate(" + 0 + "," + this.marginSlope.top * 2 + ")")
 		.attr("class","parallelCo");
 		
 	var data =[];
@@ -72,18 +69,9 @@ LoanChart.prototype.updateChart = function(selectedCollege) {
 		.domain([0,100])
 		.range([_self.heightSlope, 0]));
 	}));
-	
-	/*var tip = d3.tip()
-				  .attr('class', 'd3-tip')
-				  .offset([-10, 0])
-				  .html(function(d) {
-					return d.names +"<br>Total: " + d.UGDS+" "+ "students"+"<br> Pell Grant: " + Math.round((d.PELL/100) * d.UGDS)+" "+"students"+ "<br>Federal Grant:" + Math.round((d.Federal/100) * d.UGDS)+" "+"students";
-				  });
-				
-	svgParallel.call(tip);	*/
 
 	var tooltip = d3.select('body').append('div')
-				.attr('class', 'hidden tooltip');
+				.attr('class', 'hidden d3-tip');
 				
 	// Add grey background lines for context.
 	background = svgParallel.append("g")
@@ -102,22 +90,17 @@ LoanChart.prototype.updateChart = function(selectedCollege) {
 							.enter().append("path")
 							.attr("d", path)	  
 							.attr("stroke", function(d) { return colorSlope((d.names));})
-							.attr("stroke-width", "1.5px")
+							.attr("stroke-width", "4px")
 							.on('mousemove', function(d) {
-								var mouse = d3.mouse(svg.node()).map(function(d) {
-									return parseInt(d);
-								});
+								var mouse = d3.mouse(this);
 								tooltip.classed('hidden', false)
-									.attr('style', 'left:' + (mouse[0] + 120) +
-											'px; top:' + (mouse[1] - 5) + 'px')
+									.attr('style', 'left:' + (mouse[0] + 270) +
+											'px; top:' + (mouse[1] + 50) + 'px')
 									.html(d.names +"<br>Total: " + d.UGDS+" "+ "students"+"<br> Pell Grant: " + Math.round((d.PELL/100) * d.UGDS)+" "+"students"+ "<br>Federal Grant:" + Math.round((d.Federal/100) * d.UGDS)+" "+"students");
 							})
 							.on('mouseout', function() {
 								tooltip.classed('hidden', true);
 							});
-							//.on("mouseover", tip.show)
-							//.on("mouseout", tip.hide);
-
  
 	// Add a group element for each dimension.
 	var g = svgParallel.selectAll(".dimension")
@@ -154,7 +137,7 @@ LoanChart.prototype.updateChart = function(selectedCollege) {
 				.data(colorSlope.domain())
 				.enter().append("g")
 				.attr("class", "slopelegend")
-				.attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+				.attr("transform", function(d, i) { return "translate(-40," + i * 20 + ")"; });
 
 	// legend colored rectangles
 	legend.append("rect")
@@ -170,6 +153,7 @@ LoanChart.prototype.updateChart = function(selectedCollege) {
 		.attr("dy", ".35em")
 		.style("text-align", "left")
 		.style("font-size","0.9em")
+		//.call(this.wrap, 100);
 		.text(function(d) { return d;})
 
 	// Returns the path for a given data point.
@@ -199,4 +183,37 @@ LoanChart.prototype.noData = function(noDataAvailable) {
 	}else{
 		$(".noDataLoan").html("");
 	}
+}
+
+LoanChart.prototype.wrap = function(text, width) {
+    text.each(function () {
+        var text = d3.select(this),
+            words = text["0"]["0"].__data__.split(/\s+/).reverse(),
+            word,
+            line = [],
+            lineNumber = 0,
+            lineHeight = 1.1, // ems
+            x = text.attr("x"),
+            y = text.attr("y"),
+            dy = 0,
+            tspan = text.text(null)
+                        .append("tspan")
+                        .attr("x", x)
+                        .attr("y", y)
+                        .attr("dy", dy + "em");
+        while (word = words.pop()) {
+            line.push(word);
+            tspan.text(line.join(" "));
+            if (tspan.node().getComputedTextLength() > width) {
+                line.pop();
+                tspan.text(line.join(" "));
+                line = [word];
+                tspan = text.append("tspan")
+                            .attr("x", x)
+                            .attr("y", y)
+                            .attr("dy", ++lineNumber * lineHeight + dy + "em")
+                            .text(word);
+            }
+        }
+    });
 }
