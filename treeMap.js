@@ -70,7 +70,6 @@ TreeMap.prototype.updateChart = function(selectedCollege){
 			}
 		  }
 		  
-		  console.log(tempResult);
 		  if(dataAllNull == true){
 			noDataAvailable.push(currentline.INSTNM);
 		  }else{

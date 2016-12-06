@@ -236,7 +236,7 @@ text {
 }
 
 .d3-tip {	
- position: absolute;           
+	position: absolute;           
 	text-align: left;           
 	width: 200px;                  
 	height: 45x;                 
