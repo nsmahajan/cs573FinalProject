@@ -1,5 +1,6 @@
  <!DOCTYPE html>
-<meta charset="utf-8">
+ <link rel="stylesheet" href="SlickGrid-master/css/smoothness/jquery-ui-1.11.3.custom.css">
+ <meta charset="utf-8">
 
 <link rel="stylesheet" type="text/css" href="landingPage.css"/>
 <link rel="stylesheet" type="text/css" href="style.css"/>
@@ -83,6 +84,7 @@
 			<div class="rankContainer" style="display:none">	
 				<label class="rankTitle"for="speed">Degrees' Popularity &nbsp <small>(based on number of students enrolled in a degree)</small></label>
 				<svg class = "rankChart" width="850" height="400"></svg>
+				<div id="myGrid" style="width:600px;height:500px;"></div>
 				<div class= "noDataCourses"></div>
 			</div>
 		</div>
@@ -96,6 +98,13 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://d3js.org/queue.v1.min.js"></script>
 <script src="https://d3js.org/topojson.v1.min.js"></script>
+ <script src="SlickGrid-master/lib/jquery-1.11.2.min.js"></script>
+ <script src="SlickGrid-master/lib/jquery.event.drag-2.2.js"></script>
+ <script src="SlickGrid-master/slick.core.js"></script>
+ <script src="SlickGrid-master/slick.grid.js"></script>
+ <link rel="stylesheet" href="SlickGrid-master/slick.grid.css" type="text/css"/>
+ <link rel="stylesheet" href="SlickGrid-master/css/smoothness/jquery-ui-1.11.3.custom.css" type="text/css"/>
+ <script src="SlickGrid-master/plugins/slick.rowselectionmodel.js"></script>
 
 <script src="main.js"></script>
 <script src="landingPage.js"></script>
@@ -104,4 +113,4 @@
 <script src="tuitionChart.js"></script>
 <script src="loanChart.js"></script>
 <script src="salaryChart.js"></script>
-<script src="treeMap.js"></script>
+<script src="piechart.js"></script>

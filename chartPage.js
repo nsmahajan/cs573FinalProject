@@ -4,7 +4,7 @@ function ChartPage(data, parentPage){
 	this.selectedCollege = [];
 	this.selectedStateCode = [];
 	this.tuitionChart = new TuitionChart(this);
-	this.treeMap = new TreeMap(this);
+	this.pieChart = new pieChart(this);
 	this.loanChart = new LoanChart(this);
 	this.salaryChart = new SalaryChart(this);
 	
@@ -74,7 +74,7 @@ ChartPage.prototype.assignButtonListeners = function() {
 		}else{
 			_self.hideAllCharts();
 			$(".rankContainer").show();
-			_self.treeMap.updateChart(_self.selectedCollege);
+			_self.pieChart.updateChart(_self.selectedCollege);
 		}
     });
 	
@@ -285,7 +285,7 @@ ChartPage.prototype.updateAllCharts = function(){
 	this.tuitionChart.updateChart(this.selectedCollege);
 	this.loanChart.updateChart(this.selectedCollege);
 	this.salaryChart.updateChart(this.selectedCollege);
-	this.treeMap.updateChart(this.selectedCollege);
+	this.pieChart.updateChart(this.selectedCollege);
 }
 
 ChartPage.prototype.validateData = function(){

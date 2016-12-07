@@ -304,3 +304,18 @@ text {
 	margin-top:2%;
 
 }
+
+/* Currently selected row */
+#mygrid .slick-row.active
+{
+	background: #ff0000;
+}
+
+/* Currently selected cell */
+#mygrid .slick-cell.active
+{
+	background: #00ff00;
+}
+.slick-row.active .slick-cell {
+	background-color: #FFB;
+}
