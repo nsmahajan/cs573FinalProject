@@ -1,0 +1,85 @@
+html, body {
+    height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+.introMainContainer{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-top: 1%;
+}
+
+.wordcloud{
+	background-image: url("../images/wordcloud.png");
+	height:250px;
+	width:560px;
+}
+
+.wordcloud{
+	background-image: url("../images/wordcloud.png");
+	background-size: cover;
+    background-repeat: round;
+	height:250px;
+	width:300px;
+}
+
+.confusedStudent{
+	background-image: url("../images/confusedCollegeGarduate.gif");
+	background-size: cover;
+    background-repeat: round;
+	height:250px;
+	width:200px;
+}
+
+.processBookImage{
+	background-image: url("../images/openbook.png");
+	background-size: cover;
+    background-repeat: round;
+	height:50px;
+	width:70px;
+}
+
+.screenCastImage{
+	background-image: url("../images/screencast1.png");
+	background-size: cover;
+    background-repeat: round;
+	height:50px;
+	width:60px;
+}
+
+.ccImage{
+	background-image: url("../images/CC.jpg");
+	background-size: cover;
+    background-repeat: round;
+	height:50px;
+	width:50px;
+}
+
+.databaseImage{
+	background-image: url("../images/database.png");
+	background-size: cover;
+    background-repeat: round;
+	height:50px;
+	width:50px;
+}
+
+.links{
+	display: flex;
+    justify-content: center;
+	font-family: initial;
+    font-size: 17px;
+}
+
+.descriptionContainer {
+	width: 100%;
+	height: 100%;
+	font-family: initial;
+    font-size: 17px;
+}
+
+.descriptionText {
+	width: 90%;
+    margin: auto;
+}
