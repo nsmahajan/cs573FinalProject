@@ -28,6 +28,7 @@ html files:
 
 1. index.html --> introduction page of the visualization with a short description of what our visualization is about and
 few images along with links to screencast, process book and link to our main visualization.
+
 ![introduction page](screenshots/firstPage.png)
 
 2. indexviz.html --> main page for visualization which holds the layout for all our visualizations and buttons.
@@ -37,6 +38,7 @@ scripts folder:
 1. data.js --> reads the datasets used for our visualizations.
 
 2. landingPage.js --> visualization with choropleth map which shows the distribution of colleges across the US.	
+
 ![landing page](screenshots/secondPage.PNG)
 
 3. chartPage.js --> Main control page of our visualization which handles filters applied by the user such as 
@@ -46,6 +48,7 @@ time.
 
 4. tableChart.js --> Displays a table with list of all the colleges that satisfy the filters applied by user on State and type
 of college. 
+
 ![table chart](screenshots/thirdPageTable.PNG)
 
 5. tuitionChart.js --> displays grouped bar chart of in-state tuition fees and outstate tuition fees of the selected colleges
@@ -55,7 +58,8 @@ from the table.
 and Federal grant in the selected college obtained from the table.
 
 7. salaryChart.js --> displays a bar chart to compare average earnings of students from the selected college obtained from the table.					   				  
-![all charts](screenshots/thirdPageCharts.png)
+
+![all charts](screenshots/thirdPageCharts.PNG)
 
 External libraries:
 
