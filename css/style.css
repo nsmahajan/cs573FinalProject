@@ -1,0 +1,349 @@
+html, body {
+    height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+.tooltipCourse {   
+ 	position: absolute;           
+	text-align: left;           
+	width: 165px;                  
+	height: 45x;                 
+	padding: 10px;             
+	font: 14px sans-serif;        
+	background: white;   
+	border: 0px;      
+	border-radius: 8px;           
+	pointer-events: none;         
+}
+.logo{
+	width: 80%;
+    height: 40%;
+	background-image: url(confusedCollegeGarduate.gif);
+    background-size: cover;
+    background-repeat: round;
+}
+
+.chartPage{
+	height:96%;
+    background-size: cover;
+    background-repeat: round;
+}
+
+.leftPanel{
+	width: 28%;
+	height:100%;
+}
+
+.rightPanel{
+	width: 82%;
+	height:100%;
+}
+
+.noDataTuition{
+	width:90%;
+	margin-left:2%;
+}
+
+.noDataLoan{
+	width:90%;
+	margin-left:2%;
+}
+
+.noDataSalary{
+	width:90%;
+	margin-left:2%;
+}
+
+.noDataCourses{
+	width:90%;
+	margin-left:2%;
+}
+
+#state{
+	height: 36px;
+    font-size: 0.9em;
+	margin-left: 20px;
+}
+
+.stateTitle{
+	font-size: 15px;
+	color: black;
+    margin-left: 20px;
+	margin-right:20px;
+	margin-top:6px;
+	font-family: initial;
+    font-weight: bold;
+}
+
+.tuitionContainer{
+	height:80%;
+	margin-top: 20px;
+	margin-left: 20px;
+}
+
+.loanContainer{
+	height:80%;
+	margin-top: 20px;
+	margin-left: 20px;
+}
+
+.salaryContainer{
+	height:80%;
+	margin-top: 20px;
+	margin-left: 20px;
+}
+
+.rankContainer{
+	height:80%;
+	margin-top: 20px;
+	margin-left: 20px;
+}
+
+.barChartold{
+	width:80%;
+	height:100%;
+	margin-left: 10%;
+    margin-right: 10%;
+}
+
+.listOfSelectedColleges{
+	margin: 10px 10px 10px 20px;
+	height: 271px;
+    overflow-x: auto;
+	font-size: 0.9em;
+}
+
+.deleteButton{
+	width: 10%;
+    height: 30px;
+	background-image: url(../images/closebutton.png);
+    background-size: cover;
+    background-repeat: round;
+}
+
+.listItem{
+	width: 100%;
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+	padding-bottom: 10px;
+}
+.checkBoxTitle{
+	font-size: 15px;
+	font-family: inline;
+    font-weight: bold;
+	margin-left:40px;
+	margin-top:9px;
+}
+
+input[type=checkbox] {
+  transform: scale(1.5);
+}
+
+.schoolCheckbox, .populationCheckbox{
+	margin: 10px;
+}
+
+.schoolContainer, .populationContainer{
+	font-size: 0.9em;
+	margin:10px 10px 10px 18px;
+}
+
+.collegeTitle{
+	font-size: 1em;
+	margin: 10px;
+	color: black;
+	font-family: cursive;
+    font-weight: bold;
+}
+
+#college{
+	height: 36px;
+    font-size: 0.9em;
+	margin-left: 10px;
+}
+
+.buttonStyle {
+	display: inline-block;
+	padding: 6px 10px;
+	font-size: 1em;
+	font-family: cursive;
+	cursor: pointer;
+	text-align: center;
+	text-decoration: none;
+	outline: none;
+	color: #fff;
+	background-color: #4CAF50;
+	border: none;
+	border-radius: 8px;
+	box-shadow: 0 6px #999;
+}
+
+.buttonStyle:hover {
+	background-color: #3e8e41
+}
+
+.buttonStyle:focus {
+	background-color: #3e8e41
+}
+
+
+.buttonStyle:active {
+	background-color: #3e8e41;
+	box-shadow: 0 5px #666;
+	transform: translateY(4px);
+}
+
+.chartButtonContainer{
+	width:70%;
+	margin-top: 10px;
+    justify-content: space-around;
+    display: flex;
+}
+
+.yaxis text, .xaxis text{
+	fill: black;
+}
+
+.yaxis path, .xaxis path, .yaxis line, .xaxis line{
+	 fill: none;
+  stroke: #000;
+  stroke-width: 1;
+  shape-rendering: crispEdges;
+
+}
+
+.axis path, .axis line{
+	 fill: none;
+  stroke: #000;
+  stroke-width: 1;
+  shape-rendering: crispEdges;
+
+}
+
+#chart {
+  background: #fff;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.title {
+    font-weight: bold;
+    font-size: 14px;
+    text-align: center;
+    margin-top: 6px;
+    margin-bottom: 6px;
+}
+text {
+  pointer-events: none;
+}
+
+.d3-tip {	
+	position: absolute;           
+	text-align: left;           
+	width: 200px;                  
+	height: 45x;                 
+	padding: 10px;             
+	font: 12px sans-serif;        
+	background: lightsteelblue;   
+	border: 0px;      
+	border-radius: 8px;           
+	pointer-events: none;         
+}
+
+.grandparent text {
+  font-weight: bold;
+  color: white;
+}
+
+.rankChart rect {
+  fill: none;
+  stroke: #fff;
+}
+
+.rankChart rect.parent,
+.grandparent rect {
+  stroke-width: 2px;
+}
+
+.rankChart rect.parent {
+    pointer-events: none;
+}
+
+.grandparent rect {
+  fill: #4CAF50;
+}
+
+.grandparent:hover rect {
+  fill: #3e8e41;
+}
+
+.children rect.parent,
+.grandparent rect {
+  cursor: pointer;
+}
+
+.children rect.parent {
+  fill: #bbb;
+  fill-opacity: .5;
+}
+
+.children:hover rect.child {
+  fill: #bbb;
+}
+
+.textdiv {
+    font-family: "Open Sans",Helvetica,Arial,sans-serif;
+	font-size: 0.8em;
+    margin: 7px;
+	cursor: pointer;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 90%;
+	white-space: pre-line;
+}
+
+.textdiv div {
+	margin-top:2%;
+
+}
+
+#myGrid{
+	width: 97%;
+    height: 300px;
+    overflow: hidden;
+    outline: 0px;
+    position: relative;
+    margin-left: 3%;
+    margin-top: 1%;
+}
+/* Currently selected row */
+#mygrid .slick-row.active
+{
+	background: #ff0000;
+}
+
+/* Currently selected cell */
+#mygrid .slick-cell.active
+{
+	background: #00ff00;
+}
+.slick-row.active .slick-cell {
+	background-color: #FFB;
+}
+
+.jqstooltip{ 
+	width:260px !important;
+    height:25px!important;
+}
+
+.selectedCollegesTitle{
+	font-size: 15px;
+	color: black;
+    width: 100%;
+    text-align: center;
+	margin-top:6px;
+	font-family: initial;
+    font-weight: bold;
+}

@@ -1,8 +1,12 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <meta charset="utf-8">
 
-<link rel="stylesheet" type="text/css" href="landingPage.css"/>
-<link rel="stylesheet" type="text/css" href="style.css"/>
+<link rel="stylesheet" href="css/jquery-ui-1.11.3.custom.css">
+<link rel="stylesheet" href="css/slick.grid.css" type="text/css"/>
+<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css"/>
+<link rel="stylesheet" href="css/bootstrap-multiselect.css" type="text/css"/>
+<link rel="stylesheet" type="text/css" href="css/landingPage.css"/>
+<link rel="stylesheet" type="text/css" href="css/style.css"/>
 
 <body>
 <div class="landingPage" style="display:none">
@@ -19,89 +23,78 @@
 		</div>
 	</div>
 	<div class="compareButtonContainer">
-		<button type="button" class = "compareButton">Compare</button>
+		<button type="button" class = "compareButton">COMPARE</button>
 	</div>
 </div>
 <div class="chartPage" style="display:none">
-	<div style="display:flex;height: 96%;">
-		<div class="leftPanel" style="margin-top: 1%;">
-			<div>
+	<div style="display:flex">
+		<div style="width: 80%;">
+			<div style="display:flex;margin-top: 1%;margin-left: 1%;">
 				<label class="stateTitle"for="speed">Select a state</label>
-				<select name="state" id="state">
-				</select>
-			</div>
-			<div class="schoolContainer">
-				<fieldset style="display: inline-block;">
-					<legend class="checkBoxTitle">Type of School </legend>
-					<input class='schoolCheckbox' type="checkbox" name="schoolType" value="privateNonProfit" checked='true'/>Private (Non-profit)<br />
-					<input class='schoolCheckbox' type="checkbox" name="schoolType" value="privateProfit" checked='true'/>Private (Profit)<br />
-					<input class='schoolCheckbox' type="checkbox" name="schoolType" value="public" checked='true'/>Public<br />
-				</fieldset>
-			</div>
-			<div class="populationContainer">
-				<fieldset style="display: inline-block;">
-					<legend class="checkBoxTitle">Student Population </legend>
-					<input class='populationCheckbox' type="checkbox" name="populationCount" value="small" checked='true'/>Small ( < 2000)<br />
-					<input class='populationCheckbox' type="checkbox" name="populationCount" value="medium" checked='true'/>Medium ( 2000 - 10000) <br />
-					<input class='populationCheckbox' type="checkbox" name="populationCount" value="large" checked='true'/>Large ( > 10000) <br />
-					<input class='populationCheckbox' type="checkbox" name="populationCount" value="null" checked='true'/>Null<br />
-				</fieldset>
-			</div>
-			<div style="height: 29%;">
-				<label class="stateTitle"for="speed">Selected Colleges/Universities</label>
-				<div class="listOfSelectedColleges">
+				<select name="state" id="state" multiple="multiple"></select>
+				<div class="checkBoxTitle">Type of School </div>
+				<div style="display: inherit;margin-left:20px;margin-top:10px;">
+					<input class='schoolCheckbox' type="checkbox" name="schoolType" value="privateNonProfit" checked='true'/>&nbspPrivate (Non-profit)<br />
+				</div>
+				<div style="display: inherit;margin-left:20px;margin-top:10px;">
+					<input class='schoolCheckbox' type="checkbox" name="schoolType" value="privateProfit" checked='true'/>&nbspPrivate (Profit)<br />
+				</div>
+				<div style="display: inherit;margin-left:20px;margin-top:10px;">
+					<input class='schoolCheckbox' type="checkbox" name="schoolType" value="public" checked='true'/>&nbspPublic<br />
 				</div>
 			</div>
+			<div style="margin-left: 3%;margin-top: 1%;">* Double click to view details of a college</div>			
+			<div id="myGrid"></div>
 		</div>
-		
-		<div class="rightPanel" style="margin-top: 1%;">
-			<div>
-				<div>
-					<label class="collegeTitle"for="speed">Select colleges to compare (upto 10)</label>
-				</div>
-				<select class="college" name="college" id="college">
-				</select>
-			</div>
-			<div class="chartButtonContainer">
-				<button type="button" class = "buttonStyle tuitionButton">Tuition Fee</button>
-				<button type="button" class = "buttonStyle loanButton">Federal/PELL Funding</button>
-				<button type="button" class = "buttonStyle degreeButton">Courses Offered</button>
-				<button type="button" class = "buttonStyle salaryButton">Salary</button>
-			</div>
-			<div class="tuitionContainer">
-				<svg class = "barChart" width="880" height="400"></svg>
-				<div class= "noDataTuition"></div>
-			</div>
-			<div class="loanContainer" style="display:none">
-				<svg class = "loanChart" width="880" height="400"></svg>
-				<div class= "noDataLoan"></div>
-			</div>
-			<div class="salaryContainer" style="display:none">
-				<svg class = "salaryChart" width="880" height="400"></svg>
-				<div class= "noDataSalary"></div>
-			</div>
-			<div class="rankContainer" style="display:none">	
-				<label class="rankTitle"for="speed">Degrees' Popularity &nbsp <small>(based on number of students enrolled in a degree)</small></label>
-				<svg class = "rankChart" width="850" height="400"></svg>
-				<div class= "noDataCourses"></div>
-			</div>
+		<div style="width: 20%;margin-top: 3%;">
+			<div class="selectedCollegesTitle">Selected Colleges/Universities</div>
+			<div class="listOfSelectedColleges"></div>
+		</div>
+	</div>
+	
+	<div style="display:flex;margin-top: 5%;margin-bottom: 2%;">
+		<div class="tuitionContainer">
+			<svg class = "barChart" width="400" height="500"></svg>
+			<div class= "noDataTuition"></div>
+		</div>
+		<div class="loanContainer">
+			<svg class = "loanChart" width="400" height="430"></svg>
+			<div class= "noDataLoan"></div>
+		</div>
+		<div class="salaryContainer">
+			<svg class = "salaryChart" width="400" height="500"></svg>
+			<div class= "noDataSalary"></div>
 		</div>
 	</div>
 </div>
 
 </body>
-<script src="https:////cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js" charset="utf-8"></script>
+
 <script src="https://d3js.org/d3.v3.min.js"></script>
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://d3js.org/queue.v1.min.js"></script>
 <script src="https://d3js.org/topojson.v1.min.js"></script>
 
-<script src="main.js"></script>
-<script src="landingPage.js"></script>
-<script src="data.js"></script>
-<script src="chartPage.js"></script>
-<script src="tuitionChart.js"></script>
-<script src="loanChart.js"></script>
-<script src="salaryChart.js"></script>
-<script src="treeMap.js"></script>
+<script src="externallibraries/jquery-1.11.2.min.js"></script>
+<script src="externallibraries/jquery.event.drag-2.2.js"></script>
+<script src="externallibraries/slick.core.js"></script>
+<script src="externallibraries/slick.grid.js"></script>
+<script src="externallibraries/slick.rowselectionmodel.js"></script>
+<script src="externallibraries/firebugx.js"></script>
+<script type="text/javascript" src="externallibraries/slick.editors.js"></script>
+<script src="externallibraries/jquery-ui-1.11.3.min.js"></script>
+<script src="externallibraries/jquery.event.drag-2.3.0.js"></script>
+<script src="externallibraries/jquery.sparkline-2-1-2.min.js"></script>
+
+<!-- Include Twitter Bootstrap and jQuery: -->
+<script type="text/javascript" src="externallibraries/bootstrap.min.js"></script>
+<!-- Include the plugin's CSS and JS: -->
+<script type="text/javascript" src="externallibraries/bootstrap-multiselect.js"></script>
+
+<script src="scripts/main.js"></script>
+<script src="scripts/landingPage.js"></script>
+<script src="scripts/data.js"></script>
+<script src="scripts/chartPage.js"></script>
+<script src="scripts/tuitionChart.js"></script>
+<script src="scripts/loanChart.js"></script>
+<script src="scripts/salaryChart.js"></script>
+<script src="scripts/tableChart.js"></script>
