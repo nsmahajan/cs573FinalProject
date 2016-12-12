@@ -20,15 +20,20 @@ data folder: contains the following files
 
 3. us.json --> used to draw the choropleth map.
 			
-css folder: contains the stylesheets, images used in our visualizations.
+css folder:
+
+contains the stylesheets, images used in our visualizations.
 
 html files:
+
 1. index.html --> introduction page of the visualization with a short description of what our visualization is about and
 few images along with links to screencast, process book and link to our main visualization.
 ![introduction page](screenshots/firstPage.png)
+
 2. indexviz.html --> main page for visualization which holds the layout for all our visualizations and buttons.
 
 scripts folder:
+
 1. data.js --> reads the datasets used for our visualizations.
 
 2. landingPage.js --> visualization with choropleth map which shows the distribution of colleges across the US.	
@@ -53,14 +58,20 @@ and Federal grant in the selected college obtained from the table.
 ![all charts](screenshots/thirdPageCharts.png)
 
 External libraries:
+
 1. bootstrap libraries for our multi-select drop down with check box to select state names.
-2. jquery to handle the multiselect 
+
+2. jquery to handle the multiselect
+ 
 3. jquery.sparkline to display tooltip for our sparkline bar chart available in the table
+
 4. slick to display table information with scroll and sortable columns.
 
 
 References:
 
 1. https://github.com/6pac/SlickGrid/blob/master/examples/example-multi-column-sort.html
+
 2. http://davidstutz.github.io/bootstrap-multiselect/
+
 3. https://d3-geomap.github.io/map/choropleth/us-states/
