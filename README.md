@@ -2,15 +2,22 @@
 Visualization of Undergrads enrollment
 
 Team:
+
 1. Kartik Shetty(arsene2803)
+
 2. Kirthika Muthukumaran(kirthim13)
+
 3. Neha Mahajan (nsmahajan)
 
 Handin Folders:
+
 data folder: contains the following files
+
 1. collegeData --> college scorecard data that we use for the visualization which contains information about all the 
    undergraduate colleges in the US.
+
 2. us.tsv --> contains code, name of all the us states which use to map state abbreviation from the above csv.
+
 3. us.json --> used to draw the choropleth map.
 			
 css folder: contains the stylesheets, images used in our visualizations.
@@ -18,7 +25,7 @@ css folder: contains the stylesheets, images used in our visualizations.
 html files:
 1. index.html --> introduction page of the visualization with a short description of what our visualization is about and
 few images along with links to screencast, process book and link to our main visualization.
-![introduction page](screenshots/firstPage.PNG)
+![introduction page](screenshots/firstPage.png)
 2. indexviz.html --> main page for visualization which holds the layout for all our visualizations and buttons.
 
 scripts folder:
