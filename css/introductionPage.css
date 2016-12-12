@@ -12,13 +12,13 @@ html, body {
 }
 
 .wordcloud{
-	background-image: url("../images/wordcloud.png");
+	background-image: url("images/wordcloud.png");
 	height:250px;
 	width:560px;
 }
 
 .wordcloud{
-	background-image: url("../images/wordcloud.png");
+	background-image: url("images/wordcloud.png");
 	background-size: cover;
     background-repeat: round;
 	height:250px;
@@ -26,7 +26,7 @@ html, body {
 }
 
 .confusedStudent{
-	background-image: url("../images/confusedCollegeGarduate.gif");
+	background-image: url("images/confusedCollegeGarduate.gif");
 	background-size: cover;
     background-repeat: round;
 	height:250px;
@@ -34,7 +34,7 @@ html, body {
 }
 
 .processBookImage{
-	background-image: url("../images/openbook.png");
+	background-image: url("images/openbook.png");
 	background-size: cover;
     background-repeat: round;
 	height:50px;
@@ -42,7 +42,7 @@ html, body {
 }
 
 .screenCastImage{
-	background-image: url("../images/screencast1.png");
+	background-image: url("images/screencast1.png");
 	background-size: cover;
     background-repeat: round;
 	height:50px;
@@ -50,7 +50,7 @@ html, body {
 }
 
 .ccImage{
-	background-image: url("../images/CC.jpg");
+	background-image: url("images/CC.jpg");
 	background-size: cover;
     background-repeat: round;
 	height:50px;
@@ -58,7 +58,7 @@ html, body {
 }
 
 .databaseImage{
-	background-image: url("../images/database.png");
+	background-image: url("images/database.png");
 	background-size: cover;
     background-repeat: round;
 	height:50px;

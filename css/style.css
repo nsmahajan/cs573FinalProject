@@ -19,7 +19,7 @@ html, body {
 .logo{
 	width: 80%;
     height: 40%;
-	background-image: url(confusedCollegeGarduate.gif);
+	background-image: url(images/confusedCollegeGarduate.gif);
     background-size: cover;
     background-repeat: round;
 }
@@ -117,7 +117,7 @@ html, body {
 .deleteButton{
 	width: 10%;
     height: 30px;
-	background-image: url(../images/closebutton.png);
+	background-image: url(images/closebutton.png);
     background-size: cover;
     background-repeat: round;
 }
