@@ -13,10 +13,10 @@ MainPage.prototype.loadData = function(){
 	_self = this;
 	
 	queue()
-	.defer(d3.csv, "/scripts/data/collegeData.csv")
-	.defer(d3.tsv, "/scripts/data/us-state-names.tsv")
-	.defer(d3.json, "/scripts/data/us.json")
-	.defer(d3.csv, "/scripts/data/course.csv")
+	.defer(d3.csv, "collegeData.csv")
+	.defer(d3.tsv, "us-state-names.tsv")
+	.defer(d3.json, "us.json")
+	.defer(d3.csv, "course.csv")
 	.await(function(error, collegeData, stateNames, us, courses) {
 		if (error) {
 			console.error('Oh dear, something went wrong: ' + error);
